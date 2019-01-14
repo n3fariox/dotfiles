@@ -70,3 +70,10 @@ if [ ! -f /usr/bin/subl ]; then
     ln -s ~/dotfiles/Preferences.sublime-settings ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
     set +e
 fi
+
+if [ ! -f /usr/bin/code ]; then
+    echo "########################### VS Code is not installed ###########################"
+else
+    echo "########################## Installing VS Code Settings #########################"
+    cp vscode-settings.json ~/.config/Code/User/settings.json
+fi
