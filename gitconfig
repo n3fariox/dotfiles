@@ -1,31 +1,36 @@
 [user]
-    name = InsertNameHere
-    email = InsertEmailHere
-    username = InsertUsernameHere
+	name = InsertNameHere
+	email = InsertEmailHere
+	username = InsertUsernameHere
 [core]
-    editor = "subl -n -w"
+	editor = subl -n -w
 [diff]
-    tool = meld
+	tool = meld
 [difftool]
-    prompt = false
+	prompt = false
 [difftool "meld"]
-    cmd = meld "$LOCAL" "$REMOTE"
+	cmd = meld "$LOCAL" "$REMOTE"
+[difftool "vscode"]
+	cmd = code --wait --diff $LOCAL $REMOTE
 [merge]
-    tool = meld
+	tool = vscode
 [mergetool "meld"]
-    cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
 [color "branch"]
-    current = green bold
-    local = yellow bold
-    remote = cyan bold
+	current = green bold
+	local = yellow bold
+	remote = cyan bold
 [alias]
-    ba = branch -a
-    br = branch
-    cb = checkout -b
-    co = checkout
-    ct = checkout --track
-    ds = diff --staged
-    fp = fetch --prune
-    lg = log --oneline --decorate --graph
-    pop = stash pop
-    st = status
+	ba = branch -a
+	br = branch
+	cb = checkout -b
+	co = checkout
+	ct = checkout --track
+	ds = diff --staged
+	fp = fetch --prune
+	lg = log --oneline --decorate --graph
+	pop = stash pop
+	st = status
+	amend = commit --amend
