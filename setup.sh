@@ -46,6 +46,7 @@ echo "################################# Setup links ############################
 ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
 ln -sf ~/dotfiles/gitconfig ~/.gitconfig
 ln -sf ~/dotfiles/bbashrc ~/.bbashrc
+ln -sf ~/dotfiles/nanorc ~/.nanorc
 
 # dconf list /org/mate/terminal/ | grep profiles > /dev/null
 # if [ $? -eq 0 ]; then
