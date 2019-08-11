@@ -2,18 +2,12 @@
 	name = InsertNameHere
 	email = InsertEmailHere
 	username = InsertUsernameHere
-[core]
-	editor = subl -n -w
-[diff]
-	tool = meld
 [difftool]
 	prompt = false
 [difftool "meld"]
 	cmd = meld "$LOCAL" "$REMOTE"
 [difftool "vscode"]
 	cmd = code --wait --diff $LOCAL $REMOTE
-[merge]
-	tool = vscode
 [mergetool "meld"]
 	cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output "$MERGED"
 [mergetool "vscode"]

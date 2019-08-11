@@ -2,6 +2,9 @@
 INSTALL_FZF=true
 INSTALL_SUBLIME=false
 
+LSB_RELEASE="$(lsb_release -cs)"
+IS_DESKTOP=$(dpkg --get-selections | grep -e 'ubuntu-.*desktop' | wc -l) > 0
+
 append_line() {
   set -e
 
@@ -94,7 +97,11 @@ if [ -x "$(command -v xdg-user-dirs-update)" ]; then
 fi
 
 echo "############################# Installing packages ##############################"
-sudo apt install tmux git meld
+INSTALLS="tmux git"
+if [ "$IS_DESKTOP" -gt 0 ]; then
+    INSTALLS="$INSTALLS meld"
+fi
+sudo apt-get install $INSTALLS
 
 if [ "$INSTALL_FZF" = true ] && [ ! -d ~/.fzf/ ]; then
     echo "################################ Installing fzf ################################"
@@ -111,6 +118,7 @@ if [ "$INSTALL_SUBLIME" = true ] && [ ! -f /usr/bin/subl ]; then
     sudo apt update
     sudo apt install sublime-text
     ln -s ~/dotfiles/Preferences.sublime-settings ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+    git config --global core.editor "subl -n -w"
     set +e
 fi
 
