@@ -1,7 +1,3 @@
-[user]
-	name = InsertNameHere
-	email = InsertEmailHere
-	username = InsertUsernameHere
 [difftool]
 	prompt = false
 [difftool "meld"]
