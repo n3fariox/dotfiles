@@ -15,6 +15,7 @@ if [[ ! -z "$SUDO_USER" ]]; then
 fi
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "$THIS_DIR"
 LSB_RELEASE="$(lsb_release -cs)"
 IS_DESKTOP=$(dpkg --get-selections | grep -c -e 'ubuntu-.*desktop')
 
@@ -116,8 +117,17 @@ fi
 
 echo "################################# Setup links ##################################"
 case $(tmux -V | cut -d " " -f 2) in
+3*)
+    ln -sf "$THIS_DIR/tmux-2.9.conf" ~/.tmux.conf
+    ;;
+2.9*)
+    ln -sf "$THIS_DIR/tmux-2.9.conf" ~/.tmux.conf
+    ;;
+2.[6-8]*)
+    ln -sf "$THIS_DIR/tmux-2.6.conf" ~/.tmux.conf
+    ;;
 *)
-    ln -sf "$THIS_DIR/tmux.conf" ~/.tmux.conf
+    ln -sf "$THIS_DIR/tmux-1.9.conf" ~/.tmux.conf
     ;;
 esac
 # mkdir -p ~/.tmux/
