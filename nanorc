@@ -1,3 +1,4 @@
 set linenumbers
 set morespace
 set tabsize 4
+set tabstospaces

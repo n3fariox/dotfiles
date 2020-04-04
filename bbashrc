@@ -23,3 +23,11 @@ AUTO_TMUX=0
 if [[ -z "$AUTO_TMUX" ]] && which tmux > /dev/null 2>&1; then
     test -z "$TMUX" && (tmux attach || tmux new-session)
 fi
+
+alias shrug='echo "¯\_(ツ)_/¯"'
+
+export DOCKER_BUILDKIT=1
+function reload(){
+    source ~/.bashrc
+    echo "Reloaded bashrc"
+}

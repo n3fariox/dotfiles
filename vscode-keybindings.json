@@ -2,5 +2,37 @@
     {
         "key": "ctrl+q",
         "command": "-workbench.action.quit"
+    },
+    {
+        "key": "alt+left",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "alt+-",
+        "command": "-workbench.action.navigateBack"
+    },
+    {
+        "mac": "ctrl+cmd+up",
+        "win": "ctrl+shift+up",
+        "linux": "ctrl+shift+up",
+        "key": "ctrl+shift+up",
+        "command": "editor.action.moveLinesUpAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "mac": "ctrl+cmd+down",
+        "win": "ctrl+shift+down",
+        "linux": "ctrl+shift+down",
+        "key": "ctrl+shift+down",
+        "command": "editor.action.moveLinesDownAction",
+        "when": "editorTextFocus"
+    },
+    {
+        "mac": "cmd+shift+d",
+        "win": "ctrl+shift+d",
+        "linux": "ctrl+shift+d",
+        "key": "ctrl+shift+d",
+        "command": "editor.action.copyLinesDownAction",
+        "when": "editorFocus"
     }
 ]
