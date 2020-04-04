@@ -18,6 +18,9 @@ THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LSB_RELEASE="$(lsb_release -cs)"
 IS_DESKTOP=$(dpkg --get-selections | grep -c -e 'ubuntu-.*desktop')
 
+# Set this if it's not set
+export XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+
 if [ "$IS_DESKTOP" -gt 0 ]; then
     INSTALL_NUMIX=true
 fi
@@ -136,6 +139,9 @@ ln -sf "$THIS_DIR/bashrc" ~/.bashrc
 #     append_line 1 "source ~/.bbashrc" ~/.bashrc
 # fi
 
+mkdir -p "$XDG_CONFIG_HOME/ptpython/"
+ln -sf "$THIS_DIR/ptpython-config.py" "$XDG_CONFIG_HOME/ptpython/config.py"
+
 if [ "$INSTALL_FZF" = true ] && [ ! -d ~/.fzf/ ]; then
     echo "################################ Installing fzf ################################"
     # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -151,17 +157,17 @@ if [ "$INSTALL_SUBLIME" = true ] && [ ! -f /usr/bin/subl ]; then
     echo "deb https://download.sublimetext.com/ apt/stable" | $SUDO tee /etc/apt/sources.list.d/sublime-text.list
     $SUDO apt-get update
     $SUDO apt-get install sublime-text
-    ln -s "$THIS_DIR/Preferences.sublime-settings" ~/.config/sublime-text-3/Packages/User/Preferences.sublime-settings
+    ln -s "$THIS_DIR/Preferences.sublime-settings" "$XDG_CONFIG_HOME/sublime-text-3/Packages/User/Preferences.sublime-settings"
     git config --global core.editor "subl -n -w"
     set +e
 fi
 
-if [ -x "$(command -v code)" ]; then
+if [ ! -x "$(command -v code)" ]; then
     echo "########################### VS Code is not installed ###########################"
 else
     echo "########################## Installing VS Code Settings #########################"
-    cp "$THIS_DIR/vscode-settings.json" ~/.config/Code/User/settings.json
-    cp "$THIS_DIR/vscode-keybindings.json" ~/.config/Code/User/keybindings.json
+    cp "$THIS_DIR/vscode-settings.json" "$XDG_CONFIG_HOME/Code/User/settings.json"
+    cp "$THIS_DIR/vscode-keybindings.json" "$XDG_CONFIG_HOME/Code/User/keybindings.json"
     read -r -p "Install VS Code gitconfig (y/n)?" choice
     case "$choice" in
       y|Y ) vsgit ;;
@@ -170,6 +176,7 @@ else
 fi
 
 if [ "$INSTALL_NUMIX" = true ] && [ ! -d /usr/share/themes/Numix/ ]; then
+    echo "############################ INSTALLING NUMIX THEME ############################"
     # Should probably look for a window manager...oh well
-   sudo tar xvf "$THIS_DIR/numix-gtk-theme.tar.gz"
+    $SUDO tar xvf "$THIS_DIR/numix-gtk-theme.tar.gz" -C / 1>/dev/null
 fi
