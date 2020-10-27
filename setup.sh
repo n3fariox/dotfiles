@@ -10,7 +10,7 @@ if [[ "$SCRIPT_UID" != 0 ]]; then
   { which sudo >/dev/null && sudo test 1 ;} || { echo "non-root" && exit ;}
   SUDO="sudo"
 fi
-if [[ ! -z "$SUDO_USER" ]]; then
+if [[ -n "$SUDO_USER" ]]; then
   echo "Don't run directly as sudo, it messes with permissions" && exit
 fi
 
@@ -176,12 +176,17 @@ if [ ! -x "$(command -v code)" ]; then
     echo "########################### VS Code is not installed ###########################"
 else
     echo "########################## Installing VS Code Settings #########################"
+    mkdir -p "$XDG_CONFIG_HOME/Code/User/"
     cp "$THIS_DIR/vscode-settings.json" "$XDG_CONFIG_HOME/Code/User/settings.json"
     cp "$THIS_DIR/vscode-keybindings.json" "$XDG_CONFIG_HOME/Code/User/keybindings.json"
     read -r -p "Install VS Code gitconfig (y/n)?" choice
     case "$choice" in
-      y|Y ) vsgit ;;
-      * ) echo "Not updating gitconfig";;
+      y|Y )
+        vsgit
+        ;;
+      * )
+        echo "Not updating gitconfig"
+        ;;
     esac
 fi
 
