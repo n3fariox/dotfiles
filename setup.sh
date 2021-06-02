@@ -26,40 +26,6 @@ if [ "$IS_DESKTOP" -gt 0 ]; then
     INSTALL_NUMIX=true
 fi
 
-append_line() {
-  set -e
-
-  local update line file pat lno
-  update="$1"
-  line="$2"
-  file="$3"
-  pat="${4:-}"
-  lno=""
-
-  echo "Update $file:"
-  echo "  - $line"
-  if [ -f "$file" ]; then
-    if [ $# -lt 4 ]; then
-      lno=$(grep -nF "$line" "$file" | sed 's/:.*//' | tr '\n' ' ')
-    else
-      lno=$(grep -nF "$pat" "$file" | sed 's/:.*//' | tr '\n' ' ')
-    fi
-  fi
-  if [ -n "$lno" ]; then
-    echo "    - Already exists: line #$lno"
-  else
-    if [ "$update" -eq 1 ]; then
-      [ -f "$file" ] && echo >> "$file"
-      echo "$line" >> "$file"
-      echo "    + Added"
-    else
-      echo "    ~ Skipped"
-    fi
-  fi
-  echo
-  set +e
-}
-
 vsgit() {
     git config --global core.editor "code --wait"
     git config --global merge.tool vscode
@@ -133,8 +99,15 @@ esac
 # mkdir -p ~/.tmux/
 # ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
 # ln -sf ~/dotfiles/tmux-powerline.conf ~/.tmux/tmux-powerline.conf
-ln -sf "$THIS_DIR/gitconfig" ~/.gitconfig
-ln -sf "$THIS_DIR/nanorc" ~/.nanorc
+NORMAL_LINKS=(
+    "bashrc"
+    "gitconfig"
+    "nanorc"
+    "sqliterc"
+)
+for name in "${NORMAL_LINKS[@]}"; do
+    ln -sf "$THIS_DIR/$name" "$HOME/.${name}"
+done
 
 # dconf list /org/mate/terminal/ | grep profiles > /dev/null
 # if [ $? -eq 0 ]; then
@@ -142,10 +115,11 @@ ln -sf "$THIS_DIR/nanorc" ~/.nanorc
     # dconf load /org/mate/terminal/profiles/profile0/ < mtconf
 # fi
 
-ln -sf "$THIS_DIR/bashrc" ~/.bashrc
 # if [ -f "$HOME/.bashrc" ]; then
 #     echo "################################# Setup bashrc #################################"
 #     ln -sf "$THIS_DIR/bbashrc" ~/.bbashrc
+#     # Load the append line util
+#     . "$THIS_DIR/scripts/utils.sh"
 #     append_line 1 "source ~/.bbashrc" ~/.bashrc
 # fi
 
@@ -167,18 +141,19 @@ if [ "$INSTALL_SUBLIME" = true ] && [ ! -f /usr/bin/subl ]; then
     echo "deb https://download.sublimetext.com/ apt/stable" | $SUDO tee /etc/apt/sources.list.d/sublime-text.list
     $SUDO apt-get update
     $SUDO apt-get install sublime-text
-    ln -s "$THIS_DIR/Preferences.sublime-settings" "$XDG_CONFIG_HOME/sublime-text-3/Packages/User/Preferences.sublime-settings"
+    ln -s "$THIS_DIR/settings/Preferences.sublime-settings" "$XDG_CONFIG_HOME/sublime-text-3/Packages/User/Preferences.sublime-settings"
     git config --global core.editor "subl -n -w"
     set +e
 fi
 
 if [ ! -x "$(command -v code)" ]; then
     echo "########################### VS Code is not installed ###########################"
+    echo "wget https://go.microsoft.com/fwlink/?LinkID=760868"
 else
     echo "########################## Installing VS Code Settings #########################"
     mkdir -p "$XDG_CONFIG_HOME/Code/User/"
-    cp "$THIS_DIR/vscode-settings.json" "$XDG_CONFIG_HOME/Code/User/settings.json"
-    cp "$THIS_DIR/vscode-keybindings.json" "$XDG_CONFIG_HOME/Code/User/keybindings.json"
+    cp "$THIS_DIR/settings/vscode-settings.json" "$XDG_CONFIG_HOME/Code/User/settings.json"
+    cp "$THIS_DIR/settings/vscode-keybindings.json" "$XDG_CONFIG_HOME/Code/User/keybindings.json"
     read -r -p "Install VS Code gitconfig (y/n)?" choice
     case "$choice" in
       y|Y )
