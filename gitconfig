@@ -24,3 +24,5 @@
 	pop = stash pop
 	st = status
 	amend = commit --amend
+	ame = commit --amend --no-edit
+	rs = rebase -i --autosquash
