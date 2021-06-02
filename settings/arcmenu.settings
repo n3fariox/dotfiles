@@ -1,0 +1,26 @@
+[/]
+arc-menu-placement='DTP'
+border-color='rgb(41,50,55)'
+dtp-dtd-state=[true, false]
+enable-custom-arc-menu=true
+enable-custom-arc-menu-layout=true
+highlight-color='rgb(41,50,55)'
+menu-arrow-size=12
+menu-border-size=1
+menu-color='rgb(25,31,34)'
+menu-corner-radius=5
+menu-font-size=9
+menu-foreground-color='rgb(189,230,251)'
+menu-height=550
+menu-hotkey='Super_L'
+menu-layout='Raven'
+menu-margin=24
+menu-width=290
+multi-monitor=true
+pinned-app-list=['Firefox Web Browser', 'firefox', 'firefox.desktop', 'Terminal', 'utilities-terminal', 'org.gnome.Terminal.desktop', 'Arc Menu Settings', 'ArcMenu_ArcMenuIcon', 'gnome-extensions prefs arc-menu@linxgem33.com']
+position-in-panel='Left'
+recently-installed-apps=['wireshark.desktop', 'snap-store_snap-store.desktop', 'snap-store_ubuntu-software.desktop', 'codium.desktop']
+reload-theme=false
+right-panel-width=205
+separator-color='rgb(41,50,55)'
+vert-separator=true
