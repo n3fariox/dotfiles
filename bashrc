@@ -5,6 +5,9 @@
 # Useful python libs
 ## ptpython - fancy interpreter
 
+# The indentation below is purposeful, so you can fold
+# and not worry about the curly brace side-effects
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
