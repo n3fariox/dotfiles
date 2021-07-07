@@ -6,7 +6,8 @@
     "typescript.disableAutomaticTypeAcquisition": true,
     "extensions.autoCheckUpdates": false,
     "extensions.autoUpdate": false,
-    "extensions.showRecommendationsOnlyOnDemand": true,
+    // "extensions.showRecommendationsOnlyOnDemand": true,
+    "extensions.ignoreRecommendations": true,
     "npm.fetchOnlinePackageInfo": false,
     "workbench.enableExperiments": false,
     "workbench.settings.enableNaturalLanguageSearch": false,
@@ -28,10 +29,10 @@
     ],
     "files.exclude": {
         "**/__pycache__/**": true,
-        "**/.venv/**": true
+        "**/*venv*/**": false
     },
     "files.watcherExclude": {
         "**/__pycache__/**": true,
-        "**/.venv/**": true
-    }
+        "**/*venv*/**": true
+    },
 }

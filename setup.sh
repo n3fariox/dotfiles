@@ -69,7 +69,21 @@ fi
 
 if [ -x "$(command -v apt-get)" ]; then
   echo "############################# Installing apt packages ##########################"
-  INSTALLS=(tmux git)
+  GNOME_UTILS=(
+    "gnome-shell-extensions"
+    "gnome-shell-extension-arc-menu"
+    "gnome-shell-extension-dash-to-panel"
+  )
+  BASH_UTILS=(
+      "shellcheck"
+  )
+  INSTALLS=(
+      tmux
+      git
+      # rofi
+      # "${GNOME_UTILS[@]}"
+      # "${BASH_UTILS[@]}"
+  )
   if [ "$IS_DESKTOP" -gt 0 ]; then
       # Add desktop specific packages here
       :
