@@ -18,6 +18,8 @@ esac
 HISTCONTROL=ignoreboth
 HISTSIZE=
 HISTFILESIZE=
+HISTTIMEFORMAT="[%Y/%m/%d %T] "
+PROMPT_COMMAND="history -a; history -n"
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s globstar

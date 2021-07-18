@@ -21,6 +21,7 @@
 	ds = diff --staged
 	fp = fetch --prune
 	lg = log --oneline --decorate --graph
+	lga = lg --pretty=format:'%C(auto)%h - %d %s %Cgreen(%cr) %C(bold cyan)<%an>%Creset'
 	pop = stash pop
 	st = status
 	amend = commit --amend
