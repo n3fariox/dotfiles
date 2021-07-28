@@ -1,0 +1,94 @@
+#!/bin/zsh
+RC_FILE="$(readlink $HOME/.zshrc)"
+THIS_DIR="$( cd "$( dirname $RC_FILE )" >/dev/null 2>&1 && pwd )"
+
+# Set up the prompt
+autoload -Uz promptinit
+promptinit
+# prompt adam1
+
+# Use emacs keybindings even if our EDITOR is set to vi
+bindkey -e
+
+setopt histignorealldups sharehistory
+# Keep 10000000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000000
+SAVEHIST=10000000
+HISTFILE=~/.zsh_history
+
+# Use modern completion system
+autoload -Uz compinit
+compinit
+
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*' format 'Completing %d'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+zstyle ':completion:*' menu select=0 interactive
+eval "$(dircolors -b)"
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+# zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# make less more friendly for non-text input files, see lesspipe(1)
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+################################# ZSH PROMPT ###################################
+    autoload -Uz vcs_info
+    precmd_vcs_info() {
+        vcs_info
+    }
+
+    prompt_git_info() {
+        [ ! -z "$vcs_info_msg_0_" ] && echo "($vcs_info_msg_0_)"
+    }
+
+    precmd_functions+=( precmd_vcs_info )
+    setopt prompt_subst
+    zstyle ':vcs_info:git:*' formats '%b'
+
+    RED="%F{red}"
+    GREEN="%F{green}"
+    YELLOW="%F{yellow}"
+    BLUE="%F{blue}"
+    RESET="%f"
+
+    GIT_PS1='$(prompt_git_info)'
+
+    PS1="$GREEN%n@%M$RESET: $YELLOW%~$RESET $GIT_PS1"$'\n'
+    if [[ $EUID == 0 ]]; then
+        PS1="$PS1"'# '
+    else
+        PS1="$PS1"'$ '
+    fi
+
+    unset color_prompt RED GREEN YELLOW BLUE RESET GIT_PS1
+################################## END PROMPT ##################################
+[ -f "$HOME/dotfiles/sh/aliases" ] && . "$HOME/dotfiles/sh/aliases"
+export DOCKER_BUILDKIT=1
+################################## FUNCTIONS ###################################
+    function tmux-update-env() {
+        eval "$(tmux show-env -s)"
+    }
+
+    function reload() {
+        # shellcheck disable=SC1090
+        . ~/.zshrc
+        echo "Reloaded zshrc"
+    }
+################################ END FUNCTIONS #################################
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [ -f "$THIS_DIR/zsh_fzf" ]; then
+. "$THIS_DIR/zsh_fzf"
+bindkey '^I' fzf_completion
+fi

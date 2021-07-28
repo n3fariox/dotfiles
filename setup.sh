@@ -16,6 +16,7 @@ fi
 
 THIS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$THIS_DIR"
+echo "Dotfiles dir: $THIS_DIR"
 LSB_RELEASE="$(lsb_release -cs)"
 IS_DESKTOP=$(dpkg --get-selections | grep -c -e 'ubuntu-.*desktop')
 
@@ -98,29 +99,31 @@ fi
 echo "################################# Setup links ##################################"
 case $(tmux -V | cut -d " " -f 2) in
 3*)
-    ln -sf "$THIS_DIR/tmux-2.9.conf" ~/.tmux.conf
+    ln -sf "$THIS_DIR/tmux/tmux-2.9.conf" ~/.tmux.conf
     ;;
 2.9*)
-    ln -sf "$THIS_DIR/tmux-2.9.conf" ~/.tmux.conf
+    ln -sf "$THIS_DIR/tmux/tmux-2.9.conf" ~/.tmux.conf
     ;;
 2.[6-8]*)
-    ln -sf "$THIS_DIR/tmux-2.6.conf" ~/.tmux.conf
+    ln -sf "$THIS_DIR/tmux/tmux-2.6.conf" ~/.tmux.conf
     ;;
 *)
-    ln -sf "$THIS_DIR/tmux-1.9.conf" ~/.tmux.conf
+    ln -sf "$THIS_DIR/tmux/tmux-1.9.conf" ~/.tmux.conf
     ;;
 esac
-# mkdir -p ~/.tmux/
-# ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
-# ln -sf ~/dotfiles/tmux-powerline.conf ~/.tmux/tmux-powerline.conf
-NORMAL_LINKS=(
-    "bashrc"
-    "gitconfig"
-    "nanorc"
-    "sqliterc"
+
+LINKS=(
+    "$THIS_DIR/bash/bashrc -> $HOME/.bashrc"
+    "$THIS_DIR/zsh/zshrc -> $HOME/.zshrc"
+    "$THIS_DIR/gitconfig -> $HOME/.gitconfig"
+    "$THIS_DIR/settings/nanorc -> $HOME/.nanorc"
+    "$THIS_DIR/settings/sqliterc -> $HOME/.sqliterc"
 )
-for name in "${NORMAL_LINKS[@]}"; do
-    ln -sf "$THIS_DIR/$name" "$HOME/.${name}"
+for pair in "${LINKS[@]}"; do
+    SRC="${pair%% -> *}"
+    DST="${pair##* -> }"
+    ln -sf "$SRC" "$DST"
+    echo "$SRC -> $DST"
 done
 
 # dconf list /org/mate/terminal/ | grep profiles > /dev/null
@@ -144,9 +147,10 @@ if [ "$INSTALL_FZF" = true ] && [ ! -d ~/.fzf/ ]; then
     echo "################################ Installing fzf ################################"
     # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
     # ~/.fzf/install
-    tar xvzf "$THIS_DIR/fzf-bin.tar.gz" >/dev/null && "$THIS_DIR/install-fzf" --all
+    tar xvz -C "$THIS_DIR/fzf" -f "$THIS_DIR/fzf/fzf-bin.tar.gz" >/dev/null \
+    && "$THIS_DIR/fzf/install" --all
 fi
-
+exit
 if [ "$INSTALL_SUBLIME" = true ] && [ ! -f /usr/bin/subl ]; then
     set -e
     echo "########################### Installing sublime-text ############################"

@@ -19,7 +19,7 @@ HISTCONTROL=ignoreboth
 HISTSIZE=
 HISTFILESIZE=
 HISTTIMEFORMAT="[%Y/%m/%d %T] "
-PROMPT_COMMAND="history -a; history -n"
+PROMPT_COMMAND="history -a; history -n"  # Try and be tmux friendly
 shopt -s histappend
 shopt -s checkwinsize
 shopt -s globstar
@@ -59,25 +59,8 @@ shopt -s globstar
     fi
     unset color_prompt RED GREEN YELLOW BLUE RESET GIT_PS1
 ################################## END PROMPT ##################################
-################################### ALIASES ####################################
-    alias py3="python3 -m ptpython"
-    alias py2="python2 -m ptpython"
-    alias grin="grep -rin"
-    alias duh="du -hd1"
-    alias lash="ls -alh"
-    alias ll='ls -alF'
-    alias la='ls -A'
-    alias l='ls -CF'
-    alias shrug='echo "¯\_(ツ)_/¯"'
-    # enable color support of ls and also add handy aliases
-    if [ -x /usr/bin/dircolors ]; then
-        test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-        alias ls='ls --color=auto'
-        alias grep='grep --color=auto'
-        alias fgrep='fgrep --color=auto'
-        alias egrep='egrep --color=auto'
-    fi
-################################# END ALIASES ##################################
+[ -f "$HOME/dotfiles/sh/aliases" ] && . "$HOME/dotfiles/sh/aliases"
+export DOCKER_BUILDKIT=1
 ################################## FUNCTIONS ###################################
     function tmux-update-env() {
         eval "$(tmux show-env -s)"
@@ -109,4 +92,4 @@ if [[ -z "$AUTO_TMUX" ]] && which tmux > /dev/null 2>&1; then
     test -z "$TMUX" && (tmux attach || tmux new-session)
 fi
 
-export DOCKER_BUILDKIT=1
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
