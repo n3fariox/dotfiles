@@ -1,8 +1,16 @@
 # dotfiles
+
 Dem Dotfiles Dough
 
 Repo containing my dotfiles, as well as other helpful scripts/techniques I've
 picked up over the years.
+
+I also bundle a set of unmodified public utilities I commonly use. This repo is designed for
+personal use only and each individual project should be checked for licensing.
+
+- [fzf](https://github.com/junegunn/fzf)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
+- [bat](https://github.com/sharkdp/bat)
 
 ## tmux
 

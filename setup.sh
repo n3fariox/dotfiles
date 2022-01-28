@@ -145,10 +145,7 @@ ln -sf "$THIS_DIR/ptpython-config.py" "$XDG_CONFIG_HOME/ptpython/config.py"
 
 if [ "$INSTALL_FZF" = true ] && [ ! -d ~/.fzf/ ]; then
     echo "################################ Installing fzf ################################"
-    # git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    # ~/.fzf/install
-    tar xvz -C "$THIS_DIR/fzf" -f "$THIS_DIR/fzf/fzf-bin.tar.gz" >/dev/null \
-    && "$THIS_DIR/fzf/install" --all
+    . "$THIS_DIR/tools/install-fzf.sh"
 fi
 exit
 if [ "$INSTALL_SUBLIME" = true ] && [ ! -f /usr/bin/subl ]; then
