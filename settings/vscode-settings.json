@@ -35,4 +35,9 @@
         "**/__pycache__/**": true,
         "**/*venv*/**": true
     },
+    "terminal.integrated.commandsToSkipShell": [
+        "workbench.action.quit",
+        "workbench.action.navigateBack",
+        "workbench.action.navigateForward"
+    ]
 }

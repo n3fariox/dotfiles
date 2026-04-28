@@ -1,11 +1,42 @@
 [
     {
         "key": "ctrl+q",
-        "command": "-workbench.action.quit"
+        "command": "-workbench.action.quit",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+q",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u0011"
+        },
+        "when": "terminalFocus"
     },
     {
         "key": "alt+left",
-        "command": "workbench.action.navigateBack"
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001b[1;3D"
+        },
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+left",
+        "command": "-workbench.action.navigateBack",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+right",
+        "command": "-workbench.action.navigateForward",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "alt+right",
+        "command": "workbench.action.terminal.sendSequence",
+        "args": {
+            "text": "\u001b[1;3C"
+        },
+        "when": "terminalFocus"
     },
     {
         "key": "alt+-",
