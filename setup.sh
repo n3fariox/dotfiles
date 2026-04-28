@@ -1,6 +1,6 @@
 #!/bin/bash
 # Tailored for ubuntu systems
-INSTALL_FZF=true
+INSTALL_MISE=false
 INSTALL_SUBLIME=false
 INSTALL_NUMIX=false
 # First sanity check to see if we're root.
@@ -119,6 +119,7 @@ LINKS=(
     "$THIS_DIR/settings/nanorc -> $HOME/.nanorc"
     "$THIS_DIR/settings/sqliterc -> $HOME/.sqliterc"
     "$THIS_DIR/settings/starship.toml -> $HOME/.config/starship.toml"
+    "$THIS_DIR/settings/mise.toml -> $HOME/.config/mise/config.toml"
 )
 for pair in "${LINKS[@]}"; do
     SRC="${pair%% -> *}"
@@ -144,11 +145,21 @@ done
 mkdir -p "$XDG_CONFIG_HOME/ptpython/"
 ln -sf "$THIS_DIR/ptpython-config.py" "$XDG_CONFIG_HOME/ptpython/config.py"
 
-if [ "$INSTALL_FZF" = true ] && [ ! -d ~/.fzf/ ]; then
-    echo "################################ Installing fzf ################################"
-    . "$THIS_DIR/tools/install-fzf.sh"
+
+if [ ! -x "$(command -v mise)" ]; then
+    if [ "$INSTALL_MISE" ]; then
+        curl https://mise.run | sh
+        mise install
+    else
+        echo "Mise not installed; run"
+        echo "curl https://mise.run | sh"
+        echo "to install"
+    fi
+else
+    echo "Installing mise tools"
+    mise install
 fi
-exit
+
 if [ "$INSTALL_SUBLIME" = true ] && [ ! -f /usr/bin/subl ]; then
     set -e
     echo "########################### Installing sublime-text ############################"
