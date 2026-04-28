@@ -99,7 +99,7 @@ fi
 echo "################################# Setup links ##################################"
 case $(tmux -V | cut -d " " -f 2) in
 3*)
-    ln -sf "$THIS_DIR/tmux/tmux-2.9.conf" ~/.tmux.conf
+    ln -sf "$THIS_DIR/tmux/tmux-3.3.conf" ~/.tmux.conf
     ;;
 2.9*)
     ln -sf "$THIS_DIR/tmux/tmux-2.9.conf" ~/.tmux.conf
