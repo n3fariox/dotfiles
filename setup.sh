@@ -118,6 +118,7 @@ LINKS=(
     "$THIS_DIR/gitconfig -> $HOME/.gitconfig"
     "$THIS_DIR/settings/nanorc -> $HOME/.nanorc"
     "$THIS_DIR/settings/sqliterc -> $HOME/.sqliterc"
+    "$THIS_DIR/settings/starship.toml -> $HOME/.config/starship.toml"
 )
 for pair in "${LINKS[@]}"; do
     SRC="${pair%% -> *}"

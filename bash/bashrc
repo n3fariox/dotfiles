@@ -93,3 +93,6 @@ if [[ -z "$AUTO_TMUX" ]] && which tmux > /dev/null 2>&1; then
 fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+if [ -x "$(command -v starship)" ]; then
+    eval "$(starship init bash)"
+fi
