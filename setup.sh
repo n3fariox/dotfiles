@@ -140,11 +140,12 @@ LINKS=(
     "$THIS_DIR/settings/nanorc -> $HOME/.nanorc"
     "$THIS_DIR/settings/sqliterc -> $HOME/.sqliterc"
     "$THIS_DIR/settings/starship.toml -> $HOME/.config/starship.toml"
-    "$THIS_DIR/settings/mise.toml -> $HOME/.config/mise/config.toml"
+    "$THIS_DIR/settings/mise.toml -> $HOME/.config/mise/conf.d/50-dotfiles.toml"
 )
 for pair in "${LINKS[@]}"; do
     SRC="${pair%% -> *}"
     DST="${pair##* -> }"
+    mkdir -p "$(dirname "$DST")"
     ln -sf "$SRC" "$DST"
     echo "$SRC -> $DST"
 done
