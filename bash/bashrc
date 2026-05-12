@@ -48,6 +48,9 @@ shopt -s globstar
         . /etc/bash_completion.d/git-prompt
         # shellcheck disable=SC2016
         GIT_PS1='$(__git_ps1 "(%s)")'
+    elif [ -f "/usr/share/git/completion/git-prompt.sh" ]; then
+        . /usr/share/git/completion/git-prompt.sh
+        GIT_PS1='$(__git_ps1 "(%s)")'
     else
         GIT_PS1=""
     fi

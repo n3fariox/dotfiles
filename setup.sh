@@ -95,6 +95,27 @@ if [ -x "$(command -v apt-get)" ]; then
   $SUDO apt-get install "${INSTALLS[@]}"
 fi
 
+if [ -x "$(command -v pacman)" ]; then
+  echo "########################### Installing pacman packages #########################"
+  BASH_UTILS=(
+      "shellcheck"
+  )
+  INSTALLS=(
+      tmux
+      git
+      fzf
+      # "${BASH_UTILS[@]}"
+  )
+  if [ "$IS_DESKTOP" -gt 0 ]; then
+      # Add desktop specific packages here
+      :
+  fi
+  case $LSB_RELEASE in
+    # Add in release specific packages
+  esac
+  $SUDO pacman -S "${INSTALLS[@]}"
+fi
+
 
 echo "################################# Setup links ##################################"
 case $(tmux -V | cut -d " " -f 2) in
