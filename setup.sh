@@ -170,7 +170,9 @@ ln -sf "$THIS_DIR/ptpython-config.py" "$XDG_CONFIG_HOME/ptpython/config.py"
 if [ ! -x "$(command -v mise)" ]; then
     if [ "$INSTALL_MISE" = true ]; then
         curl https://mise.run | sh
-        echo "eval \"\$(${HOME}/.local/bin/mise activate bash)\"" >> ~/.bashrc
+        # activate is already linked in bashrc, but might not be active
+        # manually run to setup stuff for this session
+        eval "$(${HOME}/.local/bin/mise activate bash)"
         "${HOME}/.local/bin/mise" install
     else
         echo "Mise not installed; run"
