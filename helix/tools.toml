@@ -1,0 +1,7 @@
+[tool_alias]
+ruff = "aqua:astral-sh/ruff"
+
+[tools]
+node = "latest"
+helix = "latest"
+ruff = "latest"

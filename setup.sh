@@ -1,6 +1,6 @@
 #!/bin/bash
 # Tailored for ubuntu systems
-INSTALL_MISE=false
+INSTALL_MISE=true
 INSTALL_SUBLIME=false
 INSTALL_NUMIX=false
 # First sanity check to see if we're root.
@@ -141,6 +141,8 @@ LINKS=(
     "$THIS_DIR/settings/sqliterc -> $HOME/.sqliterc"
     "$THIS_DIR/settings/starship.toml -> $HOME/.config/starship.toml"
     "$THIS_DIR/settings/mise.toml -> $HOME/.config/mise/conf.d/50-dotfiles.toml"
+    "$THIS_DIR/helix/config.toml -> $HOME/.config/helix/config.toml"
+    "$THIS_DIR/helix/languages.toml -> $HOME/.config/helix/languages.toml"
 )
 for pair in "${LINKS[@]}"; do
     SRC="${pair%% -> *}"

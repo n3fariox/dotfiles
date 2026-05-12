@@ -74,6 +74,17 @@ export DOCKER_BUILDKIT=1
         . ~/.bashrc
         echo "Reloaded bashrc"
     }
+
+    function helix-init() {
+        if [ -L "$HOME/.bashrc" ]; then
+            local real_path
+            real_path="$(readlink -f "$HOME/.bashrc")"
+            bash "$(dirname "$(dirname "$real_path")")/helix/setup.sh"
+        else
+            echo "~/.bashrc is not a symlink; cannot determine dotfiles directory" >&2
+            return 1
+        fi
+    }
 ################################ END FUNCTIONS #################################
 
 # enable programmable completion features (you don't need to enable
@@ -98,11 +109,22 @@ fi
 # local tools get installed here; add it to path
 export PATH="$PATH:$HOME/.local/bin"
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 if [ -x "$(command -v starship)" ]; then
     eval "$(starship init bash)"
 fi
 
 if [ -x "$(command -v mise)" ]; then
     eval "$(mise activate bash)"
+fi
+
+if [ -x "$(command -v fzf)" ]; then
+    eval "$(fzf --bash)"
+fi
+
+if [ -x "$(command -v vivid)" ]; then
+    export LS_COLORS="$(vivid generate molokai)"
+fi
+
+if [ -x "$(command -v hx)" ]; then
+    export EDITOR="hx"
 fi

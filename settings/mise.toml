@@ -4,6 +4,7 @@ ripgrep = "aqua:BurntSushi/ripgrep"
 jq = "aqua:jqlang/jq"
 fd = "aqua:sharkdp/fd"
 asciinema = "aqua:asciinema/asciinema"
+lsd = "aqua:lsd-rs/lsd"
 
 [tools]
 bat = "latest"
@@ -11,4 +12,5 @@ fzf = "latest"
 ripgrep = "latest"
 jq = "latest"
 fd = "latest"
+lsd = "latest"
 asciinema = "latest"
