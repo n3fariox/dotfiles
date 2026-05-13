@@ -1,4 +1,5 @@
 theme = "monokai_pro"
+editor.mouse = false
 
 [editor.cursor-shape]
 insert = "bar"

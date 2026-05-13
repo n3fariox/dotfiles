@@ -1,7 +1,12 @@
 [tool_alias]
 ruff = "aqua:astral-sh/ruff"
+pbls = "github:rcorre/pbls"
 
 [tools]
 node = "latest"
 helix = "latest"
 ruff = "latest"
+
+[tools.pbls]
+version = "latest"
+bin = "pbls"

@@ -8,6 +8,13 @@ auto-format = true
 command = "docker-compose-langserver"
 args = ["--stdio"]
 
+[language-server.pbls]
+command = "pbls"
+
 [[language]]
 name = "docker-compose"
 language-servers = ["docker-compose-ls"]
+
+[[language]]
+name = "protobuf"
+language-servers = ["pbls"]
